@@ -1,0 +1,40 @@
+.error-paper {
+    background: url('../../Img/notFound.png');
+    background-size: cover;
+    background-position: center top;
+    height: 300px;
+    max-height: 500px;
+    position: relative;
+    box-shadow: 0 0 3px 3px #9aaeb8;
+    .error-code {
+        padding: 0;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 75px;
+        font-weight: 500;
+        text-align: center;
+        font-family: 'Chewy';
+        font-size: 110px;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        -webkit-text-fill-color: transparent;
+        background: linear-gradient(to right, black, #ff6333);
+        background-clip: text;
+    }
+    .error-message {
+        padding: 0;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 200px;
+        font-weight: 700;
+        text-align: center;
+        font-family: Comic Sans, Comic Sans MS, cursive;
+        font-size: 46px;
+        text-transform: uppercase;
+        -webkit-text-fill-color: transparent;
+        background: linear-gradient(to right, black, #ff6333);
+        background-clip: text;
+    }
+}

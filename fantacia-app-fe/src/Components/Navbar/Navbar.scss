@@ -1,0 +1,42 @@
+.nav-container {
+    padding: 0;
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.nav-icon-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .app-icon {
+        height: 45px;
+        width: 45px;
+        border: 1px solid white;
+        background: white;
+    }
+    .nav-router-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        b, img, Link {
+            align-self: center;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .user-icon {
+            height: 45px;
+            width: 45px;
+            border: 1px solid white;
+            background: white;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .route-link {
+            color: white;
+        }
+    }
+}
+

@@ -1,0 +1,10 @@
+Sign up => Join Group => Home =>  
+
+Update Info => Get Info back.
+
+comment, like a post  => get post.
+
+Like user => get user
+
+Get in a group => See all post 
+

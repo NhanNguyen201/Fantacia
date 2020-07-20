@@ -1,0 +1,25 @@
+.comment-paper {
+    display: block;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 20px;
+    border-left: 2px solid #c7c7c7;
+    .comment-avatar {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin-right: 15px
+    }
+    .comment-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: stretch;
+        .comment-link {
+            font-weight: 700;
+            color: black;
+        }
+    }
+}

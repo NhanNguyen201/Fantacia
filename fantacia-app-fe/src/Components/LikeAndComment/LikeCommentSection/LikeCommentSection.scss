@@ -1,0 +1,12 @@
+.like-comment-section {
+    .like-comment-btn-section {
+        box-sizing: border-box;
+        padding: 15px 0;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .comments-section {
+        padding: 0 0 15px 0;
+    }
+}
