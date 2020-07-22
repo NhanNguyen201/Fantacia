@@ -22,6 +22,10 @@
         }
     }
     .icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
         .user-like-btn, .user-friend-btn {
             // border: 1px solid black;
             margin: 0 10px;

@@ -334,7 +334,25 @@ export const getOneGroup = group => dispatch => {
             // dispatch({type: CLEAR_GROUP})
         })
 }
-
+export const createGroup = (groupName, history) => dispatch => {
+    dispatch(clearErrors())
+    dispatch({type: LOADING_UI})
+    axios
+        .post('/group/create', groupName)
+        .then(res => {
+            dispatch({
+                type: JOIN_GROUP,
+                payload: res.data
+            })
+            history.push(`/group/${res.data.groupId}`)
+        })
+        .catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response
+            })
+        })
+}
 export const joinGroup = groupId => dispatch => {
     dispatch(clearErrors())
     dispatch({type: LOADING_DATA})

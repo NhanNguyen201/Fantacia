@@ -18,7 +18,6 @@ export const SET_HIDS = 'SET_HIDS';
 export const CLEAR_HIDS = 'CLEAR_HIDS';
 export const SET_HID = 'SET_HID';
 export const CLEAR_HID = 'CLEAR_HID';
-export const SET_TEMP_HID = 'SET_TEMP_HID';
 export const SET_FOCUS_HID = 'SET_FOCUS_HID';
 export const CLEAR_FOCUS_HID = 'CLEAR_FOCUS_HID';
 

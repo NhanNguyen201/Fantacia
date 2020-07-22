@@ -24,6 +24,8 @@ exports.exploreGroups = (req, res) => {
 }
 // create group
 exports.createGroup = (req, res) => {
+    var resGroup = {};
+    if(req.body.name.trim() ==='') return res.status(400).json({error: "Group name can't be empty"})
     if(req.body.name.replace(/\s+/g, '').toLowerCase() == "none") return res.status(400).json({error: "Unable to create group with that name"})
     const defaultlGroupIcon = 'group.png';
     let newDate = new Date();
@@ -35,9 +37,11 @@ exports.createGroup = (req, res) => {
         member: 1,
         avatarIcon: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${defaultlGroupIcon}?alt=media`
     }
+    resGroup.name = newGroup.name;
     db.collection('groups')
         .add(newGroup)
         .then(doc => {
+            resGroup.groupId = doc.id;
             req.user.groups.push({
                 name: newGroup.name,
                 groupId: doc.id
@@ -45,7 +49,7 @@ exports.createGroup = (req, res) => {
             return db.doc(`/users/${req.user.userName}`).update({groups: req.user.groups})
         })
         .then(() => {
-            return res.json({message: "Create and join group successfully"})
+            return res.json(resGroup)
         })
         .catch(err => {
             console.log(err);

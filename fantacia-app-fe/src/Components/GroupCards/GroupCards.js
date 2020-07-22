@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import BeenhereIcon from '@material-ui/icons/Beenhere';
 
 import MyRoundBtn from '../../Util/MyRoundBtn';
+import CreateGroupPaper from '../CreateGroupPaper/CreateGroupPaper';
 import './GroupCards.scss'
 const GroupCards = ({groupList, credentials}) => {
     var markup = groupList.map(each => 
@@ -25,6 +26,9 @@ const GroupCards = ({groupList, credentials}) => {
     )
     return (
         <Grid container spacing={10} className="group-card-container">
+            <Grid item md={6} sm={12} xs={12} key={'create-group'}>
+                <CreateGroupPaper/>
+            </Grid>
             {markup}
         </Grid>
     )

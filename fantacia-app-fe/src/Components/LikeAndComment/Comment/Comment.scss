@@ -10,7 +10,9 @@
         height: 50px;
         width: 50px;
         border-radius: 50%;
-        margin-right: 15px
+        margin-right: 15px;
+        object-fit: cover;
+        object-position: center;
     }
     .comment-content {
         display: flex;

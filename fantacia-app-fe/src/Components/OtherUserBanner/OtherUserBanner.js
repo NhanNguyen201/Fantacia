@@ -10,6 +10,7 @@ import HowToRegIcon from '@material-ui/icons/HowToReg';
 import MyRoundBtn from '../../Util/MyRoundBtn';
 import MySquareBtn from '../../Util/MySquareBtn';
 import { connect } from 'react-redux'; 
+import AcceptAndDenyBtn from '../AcceptAndDenyBtn/AcceptAndDenyBtn';
 import { likeUser, unlikeUser, sendFriendRequest } from '../../Redux/actions/dataActions'
 import './OtherUserBanner.scss';
 const  OtherUserBanner = ({currentUser, uiLoading, likeUser, unlikeUser, sendFriendRequest}) => {
@@ -31,7 +32,7 @@ const  OtherUserBanner = ({currentUser, uiLoading, likeUser, unlikeUser, sendFri
         : ( isRequested
             ? <MySquareBtn tip="Friend request sended" btnClassName="user-friend-btn"><SendIcon color="secondary"/> Friend request sended</MySquareBtn>
             : ( isRequestToUs 
-                ? <MySquareBtn tip="Friend request sended" btnClassName="user-friend-btn"><SendIcon color="secondary"/> Answer Friend Request</MySquareBtn>
+                ? <AcceptAndDenyBtn/>
                 : <MySquareBtn tip="Friend request sended" btnClassName="user-friend-btn" onClick={sendThisFriendReq}><PersonAddIcon color="secondary" /> Add Friend </MySquareBtn>
             )
         )

@@ -24,7 +24,6 @@ import {
     UNLIKE_USER,
     SEND_FRIEND_REQUEST,
     ANSWER_FRIEND_REQUEST,
-    SET_TEMP_HID,
 } from '../types';
 
 const initialState = {
@@ -68,15 +67,6 @@ export default function(state = initialState, action) {
             return {
                 ...state
             };
-        }
-        case SET_TEMP_HID: {
-            let setIndex = state.hids.findIndex(
-                (hid) => hid.hidId === action.payload.hidId
-            );
-            return {
-                ...state,
-                focusHid: {...state.hids[setIndex]}
-            }
         }
         case SET_FOCUS_HID: {
             let setIndex = state.hids.findIndex(
