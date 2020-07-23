@@ -14,7 +14,7 @@ const JoinGroupPaper = ({groupId, joinGroup}) => {
     }
     return (
         <Paper elevation={4} className="join-group-paper">
-            <h2 className="join-group-message">You haven't joined the group. Please joined it to see more hid about for favorite</h2>
+            <h2 className="join-group-message">You haven't joined the group. Please join it to see more hids about your favorites</h2>
             <MyRoundBtn tip="click here to join this group" onClick={joinGroupAction}>
                 <ArrowForwardIcon fontSize="large" color="primary"/>
             </MyRoundBtn>

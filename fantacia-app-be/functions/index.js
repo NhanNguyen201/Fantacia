@@ -29,6 +29,7 @@ const {
     likeUser,
     unlikeUser,
     uploadImage,
+    uploadBackground,
     deleteUser,
     getAuthenticatedUser,
     sendFriendRequest,
@@ -70,6 +71,7 @@ app.post('/signup', signup);
 app.post('/login', login);
 app.get('/user', FBAuth, getAuthenticatedUser);
 app.post('/user/uploadAvatar', FBAuth, uploadImage);
+app.post('/user/background', FBAuth, uploadBackground);
 app.post('/user/info', FBAuth, updateUserData);
 app.delete('/user/delete', FBAuth, deleteUser);
 // => Other user route

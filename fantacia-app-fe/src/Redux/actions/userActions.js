@@ -75,7 +75,17 @@ export const uploadAvatarImage = (formData) => (dispatch) => {
         })
         .catch((err) => console.log(err));
 };
-  
+
+export const uploadBackground = (formData) => (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    axios
+        .post('/user/background', formData)
+        .then(() => {
+            dispatch(getUserData());
+        })
+        .catch((err) => console.log(err));
+};
+   
 export const editUserDetails = (userDetails) => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios

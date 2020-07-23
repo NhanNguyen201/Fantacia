@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getHids, clearHids } from '../Redux/actions/dataActions';
 import PostTextStatus from '../Components/PostHid/PostTextStatus/PostTextStatus';
 import PostPhotoStatus from '../Components/PostHid/PostPhotoStatus/PostPhotoStatus';
+import UnauthenticateBanner from '../Components/UnauthenticateBanner/UnauthenticateBanner';
 import Hid from '../Components/Hid/Hid';
 // mui
 import Grid from '@material-ui/core/Grid';
@@ -51,7 +52,7 @@ const Home = ({getHids, clearHids, authenticated, dataLoading, userLoading, data
         )
         : ( userLoading
             ? (<p>Loading</p>)
-            : (<p>Unauthenticated</p>)
+            : (<UnauthenticateBanner/>)
         )
     return markup;
 }

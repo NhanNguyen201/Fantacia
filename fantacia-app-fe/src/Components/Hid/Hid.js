@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { emojify } from 'react-emojione';
 import { connect } from 'react-redux';
@@ -20,7 +21,7 @@ import 'dayjs/locale/vi';
 import HidDialog from '../HidDialog/HidDialog';
 import StatusDialog from '../StatusDialog/StatusDialog'
 import './Hid.scss'
-const Hid = ({user,isOpen, data, hid: {type, userName, bio, userImage, image, hidId, group, body, createdAt, likeCount, commentCount, comments}}) => {
+const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, group, body, createdAt, likeCount, commentCount, comments}}) => {
     const locale = {
         name: 'vi',
         relativeTime: {
@@ -41,6 +42,9 @@ const Hid = ({user,isOpen, data, hid: {type, userName, bio, userImage, image, hi
     }
     dayjs.locale(locale, null, true)
     dayjs.extend(relativeTime);
+    let location = useLocation();
+    let { pathname } = location;
+    let isPathIncludeGroup = pathname.split('/').includes('group');
     var resultHid;
     if(type === "textHid"){
         resultHid = (
@@ -49,7 +53,7 @@ const Hid = ({user,isOpen, data, hid: {type, userName, bio, userImage, image, hi
                     <div className="header-info">
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
-                            <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link> {(group.name !== "none" && !data.group.name) && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${group.groupId}`} className="group-link">{group.name}</Link></>)}</b></p>
+                            <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link> { !isPathIncludeGroup && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${group.groupId}`} className="group-link">{group.name}</Link></>)}</b></p>
                             <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
                         </div>
                     </div>
@@ -81,7 +85,7 @@ const Hid = ({user,isOpen, data, hid: {type, userName, bio, userImage, image, hi
                     <div className="header-info">
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
-                            <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link> {(group.name !== "none" && !data.group.name) && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${group.groupId}`} className="group-link">{group.name}</Link></>)}</b></p>
+                            <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link> { !isPathIncludeGroup && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${group.groupId}`} className="group-link">{group.name}</Link></>)}</b></p>
                             <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
                         </div>
                     </div>
@@ -213,11 +217,9 @@ const Hid = ({user,isOpen, data, hid: {type, userName, bio, userImage, image, hi
 }
 Hid.propTypes = {
     user: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
     hid: PropTypes.object.isRequired,
 } 
 const mapStateToProps = state => ({
-    user: state.user.credentials,
-    data: state.data
+    user: state.user.credentials
 })
 export default connect(mapStateToProps)(Hid);

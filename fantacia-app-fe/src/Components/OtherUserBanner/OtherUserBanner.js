@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import defaultBg from '../../Img/background.png';
 //mui
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -36,8 +37,8 @@ const  OtherUserBanner = ({currentUser, uiLoading, likeUser, unlikeUser, sendFri
                 : <MySquareBtn tip="Friend request sended" btnClassName="user-friend-btn" onClick={sendThisFriendReq}><PersonAddIcon color="secondary" /> Add Friend </MySquareBtn>
             )
         )
-    return(
-        <div className="other-user-banner">
+    return (
+        <div className="other-user-banner" style={{backgroundImage: (userInfo && userInfo.background ) ? `url(${userInfo.background})` : `url(${defaultBg})`}}>
             <>
                 <div className="user-info">
                     {userInfo && <img src={userInfo.imageUrl} alt="userAvatar" className="user-avatar"/>}
@@ -49,7 +50,7 @@ const  OtherUserBanner = ({currentUser, uiLoading, likeUser, unlikeUser, sendFri
                 </div>
             </>
         </div>
-    )
+    );
 }
 OtherUserBanner.propTypes = {
     currentUser: PropTypes.object.isRequired,
@@ -57,9 +58,10 @@ OtherUserBanner.propTypes = {
     likeUser: PropTypes.func.isRequired,
     unlikeUser: PropTypes.func.isRequired,
     sendFriendRequest: PropTypes.func.isRequired,
-
+    dataLoading: PropTypes.bool.isRequired
 }
 const mapStateToProp = state => ({
+    dataLoading: state.data.loading,
     currentUser: state.data.focusPerson,
     uiLoading: state.UI.loading
 })
