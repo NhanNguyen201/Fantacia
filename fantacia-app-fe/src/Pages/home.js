@@ -39,7 +39,7 @@ const Home = ({getHids, clearHids, authenticated, dataLoading, userLoading, data
                         <Grid container spacing={10}>
                             <Grid item md={8} sm={12} xs={12} >
                                 <PostTextStatus/>
-                                <PostPhotoStatus/>
+                                <PostPhotoStatus/>  
                                 <p>There is no hid now</p>
                             </Grid>
                             <Grid item sm={4} xs={12}>

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // MUI
@@ -16,102 +17,80 @@ import Select from '@material-ui/core/Select';
 import themeFile from '../Util/theme'
 //Redux
 import { connect } from 'react-redux';
+import { clearErrors } from '../Redux/actions/dataActions';
 import { signupUser } from '../Redux/actions/userActions';
 
 const styles = themeFile;
 
-class signup extends Component {
-    constructor(){
-        super();
-        this.state = {
-            email: "",
-            password: "",
-            confirmPassword: "",
-            bio: "",
-            gender: "male",
-            seek: "female",
-            errors : {}
+const Signup = ({ui, signupUser, clearErrors, classes}) => {
+    let history = useHistory();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword ] = useState('');
+    const [bio, setBio] = useState('');
+    const [gender, setGender] = useState('male');
+    const [error, setError] = useState({});
+    useEffect(() => {
+        if(ui.errors) setError(ui.errors)
+        console.log(ui.errors)
+    }, [ui])
+    const handleSubmit = e => {
+        e.preventDefault();
+        clearErrors();
+        const newUser = {
+            email,
+            password,
+            confirmPassword,
+            bio,
+            gender
         }
+        console.log(newUser);
+        signupUser(newUser, history)
     }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.UI.errors){
-            this.setState({errors: nextProps.UI.errors})
-        }
-    }
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({
-            loading: true
-        });
-        const newUserData ={
-            email: this.state.email,
-            password: this.state.password,
-            confirmPassword: this.state.confirmPassword,
-            bio: this.state.bio,
-            gender: this.state.gender,        
-        }
-        this.props.signupUser(newUserData, this.props.history)
-    }
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
-    } 
-    render(){
-        const { classes, UI: {loading} } = this.props;
-        const { errors } = this.state;
-        return (
-            <Grid container className={classes.form}>
+    return (
+        <Grid container className={classes.form}>
                 <Grid item sm></Grid>
                 <Grid item sm>
                     <Typography variant='h2' className={classes.pageTitle}>Sign up</Typography>
-                    <form noValidate onSubmit={this.handleSubmit}>
+                    <form noValidate onSubmit={handleSubmit}>
                         <TextField 
-                            id='email' 
-                            name='email' 
                             type='email' 
                             label='Email' 
                             className={classes.textField} 
-                            helperText={errors.email}
-                            error={errors.email ? true : false}
-                            value={this.state.email} 
-                            onChange={this.handleChange} 
+                            helperText={error.email}
+                            error={error.email ? true : false}
+                            value={email} 
+                            onChange={e => setEmail(e.target.value)} 
                             fullWidth
                         />
                         <TextField 
-                            id='password' 
-                            name='password' 
                             type='password' 
                             label='Password' 
                             className={classes.textField} 
-                            helperText={errors.password}
-                            error={errors.password ? true : false}
-                            value={this.state.password} 
-                            onChange={this.handleChange} 
+                            helperText={error.password}
+                            error={error.password ? true : false}
+                            value={password} 
+                            onChange={e => {setPassword(e.target.value)}} 
                             fullWidth
                         />
                         <TextField 
-                            id='confirmPassword' 
-                            name='confirmPassword' 
                             type='password' 
                             label='Confirm password' 
                             className={classes.textField} 
-                            helperText={errors.confirmPassword}
-                            error={errors.confirmPassword ? true : false}
-                            value={this.state.confirmPassword} 
-                            onChange={this.handleChange} 
+                            helperText={error.confirmPassword}
+                            error={error.confirmPassword ? true : false}
+                            value={confirmPassword} 
+                            onChange={e => {setConfirmPassword(e.target.value)}} 
                             fullWidth
                         />
                         <TextField 
-                            id='bio' 
-                            name='bio' 
                             type='text' 
                             label='Your name' 
                             className={classes.textField} 
-                            helperText={errors.bio}
-                            error={errors.bio ? true : false}
-                            value={this.state.bio} 
-                            onChange={this.handleChange} 
+                            helperText={error.bio}
+                            error={error.bio ? true : false}
+                            value={bio} 
+                            onChange={e => setBio(e.target.value)} 
                             fullWidth
                         />
                         <FormControl variant="outlined" className={classes.textField} fullWidth>
@@ -120,8 +99,8 @@ class signup extends Component {
                                 labelId="genderLabel"
                                 id="gender"
                                 name="gender"
-                                value={this.state.gender}
-                                onChange={this.handleChange}
+                                value={gender}
+                                onChange={e => setGender(e.target.value)}
                                 label="Gender"
                             >
                                 <MenuItem value={"female"}>Female</MenuItem>
@@ -129,14 +108,19 @@ class signup extends Component {
                             </Select>
                         </FormControl>
                         <br/>
-                        {errors.general && (
+                        {error.general && (
                             <Typography variant="body2" className={classes.customError}>
-                                {errors.general}
+                                {error.general}
                             </Typography>
                         )}
-                        <Button type="submit" variant="outlined" color="primary" disabled={loading}>
+                        {error.message && (
+                            <Typography variant="body2" className={classes.customError}>
+                                {error.message}
+                            </Typography>
+                        )}
+                        <Button type="submit" variant="outlined" color="primary" disabled={ui.loading}>
                             Sign up
-                            {loading && (
+                            {ui.loading && (
                                 <CircularProgress size={20} className={classes.progress}/>
                             )}
                         </Button>
@@ -146,17 +130,15 @@ class signup extends Component {
                 </Grid>
                 <Grid item sm></Grid>
             </Grid>
-        )
-    }
+    )
 }
-signup.propTypes = {
+Signup.propTypes = {
     classes: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
-    UI: PropTypes.object.isRequired,
-    signupUser: PropTypes.func.isRequired
+    ui: PropTypes.object.isRequired,
+    signupUser: PropTypes.func.isRequired,
+    clearErrors: PropTypes.func.isRequired
 }
 const mapStateToProps = (state) => ({
-    user: state.user,
-    UI: state.UI
+    ui: state.UI
 })
-export default connect(mapStateToProps, { signupUser })(withStyles(styles)(signup));
+export default connect(mapStateToProps, { signupUser, clearErrors })(withStyles(styles)(Signup));

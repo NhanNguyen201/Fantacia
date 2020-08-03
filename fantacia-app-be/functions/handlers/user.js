@@ -21,17 +21,10 @@ exports.signup = (req, res) => {
     const defaultBg = 'background.png';
     // validate
     let token, userId;
-    db.doc(`/users/${newUser.userName}`).get()
-        .then(doc => {
-            if(doc.exists){
-                return res.status(400).json({ userName: 'This userName is already taken'})
-            } else {
-                return firebase
-                            .auth()
-                            .createUserWithEmailAndPassword(newUser.email, newUser.password)
-            }
-        })
-        .then(data => {
+    firebase
+        .auth()
+        .createUserWithEmailAndPassword(newUser.email, newUser.password)
+                .then(data => {
             userId = data.user.uid;
             return data.user.getIdToken()            
         })
@@ -230,22 +223,14 @@ exports.getOneUser = (req, res)=> {
 }
 
 exports.calcCompatible = (req, res) => {
-    const likeByUser =
+    const likes =
         db.collection('hidLikes')
-        .where('userName', '==', req.user.userName)
-        .where('hidHost', '==', req.params.userName)
-    const likeByThem =
-        db.collection('hidLikes')
-        .where('userName', '==', req.params.userName)
-        .where('hidHost', '==', req.user.userName)
-    const commentByUser =
+        .where('userName', 'in', [req.user.userName, req.params.userName])
+        .where('hidHost', 'in', [req.params.userName, req.user.userName])
+    const comments =
         db.collection('hidComments')
-        .where('userName', '==', req.user.userName)
-        .where('hidHost', '==', req.params.userName)
-    const commentByThem =
-        db.collection('hidComments')
-        .where('userName', '==', req.params.userName)
-        .where('hidHost', '==', req.user.userName)
+        .where('userName', 'in', [req.params.userName, req.user.userName])
+        .where('hidHost', 'in', [req.params.userName, req.user.userName])
     var compatibleScore = {}
     db.doc(`/users/${req.params.userName}`)
         .get()
@@ -258,45 +243,27 @@ exports.calcCompatible = (req, res) => {
                     commonGroup = req.user.groups.filter(x => doc.data().groups.some(y => x.groupId === y.groupId))
                     compatibleScore.numberOfGroup = commonGroup.length;
                 }
-                return likeByUser.get()
+                return likes.get()
             }
         })
         .then(data => {
             if(!data.empty) {
-                compatibleScore.likeByUser = data.docs.length;
+                compatibleScore.likes = data.docs.filter(doc => (doc.userName === req.user.userName && doc.hidHost === req.params.userName) || (doc.userName === req.params.userName && doc.hidHost === req.user.userName));
             } else {
-                compatibleScore.likeByUser = 0;
+                compatibleScore.likes = [];
             }
-            return likeByThem.get()
+            return comments.get()
         })
         .then(data => {
             if(!data.empty) {
-                compatibleScore.likeByThem = data.docs.length;
+                compatibleScore.comments = data.docs.filter(doc => (doc.userName === req.user.userName && doc.hidHost === req.params.userName) || (doc.userName === req.params.userName && doc.hidHost === req.user.userName));
             } else {
-                compatibleScore.likeByThem = 0;
+                compatibleScore.comments = [];
             }
-            return commentByUser.get()
-        })
-        .then(data => {
-            if(!data.empty) {
-                compatibleScore.commentByUser = data.docs.length;
-            } else {
-                compatibleScore.commentByUser = 0;
-            }
-            return commentByThem.get()
-        })
-        .then(data => {
-            if(!data.empty){
-                compatibleScore.commentByThem = data.docs.length;
-            } else {
-                compatibleScore.commentByThem = 0;
-            }   
             var compatibleAfterCalc = 
                 compatibleScore.numberOfGroup 
-                + compatibleScore.likeByUser * 10 
-                + compatibleScore.likeByThem * 10 
-                + compatibleScore.commentByUser * 20 
-                + compatibleScore.commentByThem * 20;
+                + compatibleScore.likes.length * 10 
+                + compatibleScore.comments.length * 20;
             return res.json({value: compatibleAfterCalc})
         })
         .catch(err => res.status(500).json({error: err}))

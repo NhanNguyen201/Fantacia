@@ -43,7 +43,13 @@ const EditHid = ({editHid, clearErrors, ui, hidId}) => {
             <Button color="primary" onClick={handleClickOpen} style={{padding: '10px 30px'}}>
                Edit 
             </Button>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
+            <Dialog 
+                open={open} 
+                onClose={handleClose} 
+                aria-labelledby="form-dialog-title" 
+                fullWidth
+                maxWidth="sm"
+            >
                 <DialogTitle id="form-dialog-title">Edit a hid</DialogTitle>
                 <DialogContent>
                     <DialogContentText>

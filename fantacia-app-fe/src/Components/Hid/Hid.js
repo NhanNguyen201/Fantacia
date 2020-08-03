@@ -5,8 +5,6 @@ import { emojify } from 'react-emojione';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 // mui
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 //component
@@ -19,7 +17,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/vi';
 // hids dialog
 import HidDialog from '../HidDialog/HidDialog';
-import StatusDialog from '../StatusDialog/StatusDialog'
+import StatusDialog from '../StatusDialog/StatusDialog';
+import LikeListDialog from '../LikeListDialog/LikeListDialog/LikeListDialog';
 import './Hid.scss'
 const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, group, body, createdAt, likeCount, commentCount, comments}}) => {
     const locale = {
@@ -64,10 +63,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                 </div>
                 <div className="hid-footer">        
                     <div className="counter">
-                        <p>{likeCount > 0 
-                            ? <FavoriteIcon color="secondary" style={{transform: "translateY(25%)"}}/> 
-                            : <FavoriteBorder color="secondary" style={{transform: "translateY(25%)"}}/>
-                        }{likeCount}</p>
+                        <LikeListDialog hidId={hidId} likeCount={likeCount}/>
                         <p>{commentCount} {commentCount > 1 ? "comments" : "comment"}</p>
                     </div>
                     <hr/>
@@ -97,10 +93,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                 </div>
                 <div className="hid-footer">
                     <div className="counter">
-                        <p>{likeCount > 0 
-                            ? <FavoriteIcon color="secondary" style={{transform: "translateY(25%)"}}/> 
-                            : <FavoriteBorder color="secondary" style={{transform: "translateY(25%)"}}/>
-                        }{likeCount}</p>
+                        <LikeListDialog hidId={hidId} likeCount={likeCount}/>
                         <p>{commentCount} {commentCount > 1 ? "comments" : "comment"}</p>
                     </div>
                     <hr/>
@@ -118,7 +111,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                     <div className="header-info">
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
-                            <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link></b> has post a status</p>
+                            <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link></b> has posted a status</p>
                             <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
                         </div>
                     </div>
@@ -129,10 +122,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                 </div>
                 <div className="hid-footer">
                     <div className="counter">
-                        <p>{likeCount > 0 
-                            ? <FavoriteIcon color="secondary" style={{transform: "translateY(25%)"}}/> 
-                            : <FavoriteBorder color="secondary" style={{transform: "translateY(25%)"}}/>
-                        }{likeCount}</p>
+                        <LikeListDialog hidId={hidId} likeCount={likeCount}/>
                         <p>{commentCount} {commentCount > 1 ? "comments" : "comment"}</p>
                     </div>
                     <hr/>
@@ -162,10 +152,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                 </div>
                 <div className="hid-footer">
                     <div className="counter">
-                        <p>{likeCount > 0 
-                            ? <FavoriteIcon color="secondary" style={{transform: "translateY(25%)"}}/> 
-                            : <FavoriteBorder color="secondary" style={{transform: "translateY(25%)"}}/>
-                        }{likeCount}</p>
+                        <LikeListDialog hidId={hidId} likeCount={likeCount}/>
                         <p>{commentCount} {commentCount > 1 ? "comments" : "comment"}</p>
                     </div>
                     <hr/>
@@ -196,12 +183,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                 </div>
                 <div className="hid-footer">
                     <div className="counter">
-                        <p>
-                            {likeCount > 0 
-                                ? <FavoriteIcon color="secondary" style={{transform: "translateY(25%)"}}/> 
-                                : <FavoriteBorder color="secondary" style={{transform: "translateY(25%)"}}/>
-                            }{likeCount}
-                        </p>
+                        <LikeListDialog hidId={hidId} likeCount={likeCount}/>
                         <p>{commentCount} {commentCount > 1 ? "comments" : "comment"}</p>
                     </div>
                     <hr/>

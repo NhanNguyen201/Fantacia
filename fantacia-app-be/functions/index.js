@@ -1,7 +1,20 @@
 const functions = require('firebase-functions');
 const app = require('express')();
+
 const cors = require('cors');
-app.use(cors());
+const helmet = require('helmet');
+app.use(cors({
+    origin: true
+}));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Header', "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.use(helmet());
+
 const FBAuth = require('./Util/FBAuth');
 const { db, admin } = require('./Util/admin');
 const { 
@@ -11,7 +24,7 @@ const {
     postPhotoStatus,
     editHid,
     deleteHid,
-    getMyHids,
+    getMyHids,  
     getAllMyViewHid,
     getAllHidsInOneGroups,
     getOneHid,

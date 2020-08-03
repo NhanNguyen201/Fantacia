@@ -41,7 +41,13 @@ const PostTextStatus = ({postTextStatus, clearErrors, ui}) => {
             <MyRoundBtn onClick={handleClickOpen} tip="Post a status">
                 <PostAddIcon color="primary" fontSize="large"/>
             </MyRoundBtn>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
+            <Dialog 
+                open={open} 
+                onClose={handleClose} 
+                aria-labelledby="form-dialog-title" 
+                maxWidth="xs"
+                fullWidth
+            >
                 <DialogTitle id="form-dialog-title">Post a status</DialogTitle>
                 <DialogContent>
                     <DialogContentText>

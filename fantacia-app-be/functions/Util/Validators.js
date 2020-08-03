@@ -1,5 +1,5 @@
 const isEmpty = (string) => {
-    if(string.trim() === "") {
+    if(string === "" || String(string).trim() === "") {
         return true;
     } else {
         return false;
@@ -21,7 +21,7 @@ exports.validateSignupData = (data) => {
     }
 
     if(isEmpty(data.password)) errors.password = "Must not be empty";
-    if(data.password !== data.confirmPassword) errors.comfirmPassword = 'Password must match';
+    if(data.password !== data.confirmPassword) errors.confirmPassword = 'Confirm password must match';
     if(isEmpty(data.bio)) errors.bio = "Must not be empty";
     if(isEmpty(data.gender)) errors.gender = "Must not be empty";
     return {

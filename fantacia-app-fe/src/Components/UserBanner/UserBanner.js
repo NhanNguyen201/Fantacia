@@ -5,12 +5,12 @@ import defaultBg from '../../Img/background.png'
 import SettingsEthernetIcon from '@material-ui/icons/SettingsEthernet';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PhotoSizeSelectActualIcon from '@material-ui/icons/PhotoSizeSelectActual';
-
 import MyRoundBtn from '../../Util/MyRoundBtn';
 //redux
 import { connect } from 'react-redux'; 
 import { uploadAvatarImage, uploadBackground } from '../../Redux/actions/userActions';
 import './UserBanner.scss';
+
 const  UserBanner = ({user, uploadAvatarImage, uploadBackground}) => {
     const { credentials } = user;
     const avatarInput = useRef(null);

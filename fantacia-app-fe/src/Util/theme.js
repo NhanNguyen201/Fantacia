@@ -47,7 +47,7 @@ export default {
     },
     customError: {
         color: 'red',
-        fontSize: '0.8rem',
-        marginTop: 20
+        fontSize: '1rem',
+        marginTop: 5
     }
 }

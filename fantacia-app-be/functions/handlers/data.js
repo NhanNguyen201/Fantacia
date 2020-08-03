@@ -269,7 +269,7 @@ exports.getOneHid = (req, res) => {
             hidData.likes = [];
             if(!data.empty){
                 data.forEach(doc => {
-                    hidData.likes.push({...doc.data(), commentId: doc.id})
+                    hidData.likes.push({...doc.data(), likeId: doc.id})
                 })
             }
             return res.json(hidData)
@@ -371,6 +371,7 @@ exports.getMyHids = (req, res) => {
         })
 
 }
+
 exports.likeHid = (req, res) => {
     let hidData;
     const likeDoc = db.collection('hidLikes')
@@ -402,9 +403,14 @@ exports.likeHid = (req, res) => {
                     return res.status(400).json({error: 'you have liked this hid already'})
                 }
             })
-        .then(() => {
-            hidData.likeCount++;
-            return db.doc(`/hids/${req.params.hidId}`).update({likeCount: hidData.likeCount})  
+        .then(() => db.collection('hidLikes').where('hidId', '==', req.params.hidId).get())
+        .then(data => {
+            if(!data.empty){
+                hidData.likeCount = data.docs.length
+            } else {
+                hidData.likeCount = 1
+            }
+            return db.doc(`/hids/${req.params.hidId}`).update({likeCount: hidData.likeCount})
         })
         .then(() => res.json(hidData))
         .catch(err => {
@@ -437,8 +443,13 @@ exports.unlikeHid = (req, res) => {
                 return db.doc(`/hidLikes/${data.docs[0].id}`).delete()
             }
         })
-        .then(() => {
-            hidData.likeCount--;
+        .then(() => db.collection('hidLikes').where('hidId', '==', req.params.hidId).get())
+        .then(data => {
+            if(!data.empty){
+                hidData.likeCount = data.docs.length
+            } else {
+                hidData.likeCount = 0
+            }
             return db.doc(`/hids/${req.params.hidId}`).update({likeCount: hidData.likeCount})
         })
         .then(() => res.json(hidData))

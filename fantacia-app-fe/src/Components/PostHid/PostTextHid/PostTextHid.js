@@ -41,7 +41,12 @@ const PostTextHid = ({postHid, clearErrors, group, ui}) => {
             <MyRoundBtn onClick={handleClickOpen} tip="Post a hid">
                 <PostAddIcon color="primary" fontSize="large"/>
             </MyRoundBtn>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
+            <Dialog 
+                open={open} 
+                onClose={handleClose} 
+                aria-labelledby="form-dialog-title" 
+                maxWidth="sm"
+            >
                 <DialogTitle id="form-dialog-title">Create a Hid</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
