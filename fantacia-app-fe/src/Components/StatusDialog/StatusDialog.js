@@ -18,49 +18,22 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Paper from '@material-ui/core/Paper';
-// dayjs
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/vi';
-
 // component
 import LikeCommentSection from '../LikeAndComment/LikeCommentSection/LikeCommentSection'
+import MyTime from '../../Util/MyTime';
 import './StatusDialog.scss';
 
-const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, data: {focusHid}, user }) => {
-    const locale = {
-        name: 'vi',
-        relativeTime: {
-            future: '%s from now',
-            past: '%s ago',
-            s: 'few seconds',
-            m: 'a minute',
-            mm: '%d minutes',
-            h: 'a hour',
-            hh: '%d hours',
-            d: 'a day',
-            dd: '%d days',
-            M: 'a month',
-            MM: '%d months',
-            y: 'a year',
-            yy: '%d years'
-        }
-    }
-    dayjs.locale(locale, null, true)
-    dayjs.extend(relativeTime);
-
-    // let history = useHistory(); 
+const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, data: {focusHid: {createdAt}, focusHid}, user }) => {
     let location = useLocation();
     let { userName } = useParams();
     const [open, setOpen] = useState(false);
     const [oldPath, setOldPath] = useState('')
     const [newPath, setNewPath] = useState('');
     const [loading, setLoading] = useState(true);
-    
     useEffect(() => {
         if(isOpen) handleOpen()    
         //eslint-disable-next-line
-    }, [])
+    }, [location])
 
     useEffect(() => {
         if(uiLoading && !focusHid) setLoading(true)
@@ -69,7 +42,7 @@ const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, dat
     }, [uiLoading, focusHid])
 
     const handleOpen = () => {
-        setOldPath(location.pathname);
+        setOldPath(location.pathname);        
         if( userName && userName !== user.credentials.userName ){
             setNewPath(`/user/${userName}/hid/${hidId}`);
         } else {
@@ -119,7 +92,7 @@ const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, dat
                                     <img src={focusHid.userImage} alt="userAvatar" className="userAvatar"/>
                                     <div className="header-content">
                                         <b><Link to={`/user/${focusHid.userName}`} className="user-link">{focusHid.bio}</Link></b>
-                                        <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(focusHid.createdAt).fromNow()}</small>
+                                        <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +131,7 @@ const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, dat
                                             <img src={focusHid.userImage} alt="userAvatar" className="userAvatar"/>
                                             <div className="header-content">
                                                 <b><Link to={`/user/${focusHid.userName}`} className="user-link">{focusHid.bio}</Link></b>
-                                                <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(focusHid.createdAt).fromNow()}</small>
+                                                <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                                             </div>
                                         </div>
                                     </div>
@@ -196,7 +169,7 @@ const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, dat
                                 <img src={focusHid.userImage} alt="userAvatar" className="userAvatar"/>
                                 <div className="header-content">
                                     <b><Link to={`/user/${focusHid.userName}`} className="user-link">{focusHid.bio}</Link></b>
-                                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(focusHid.createdAt).fromNow()}</small>
+                                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                                 </div>
                             </div>
                         </div>
@@ -235,7 +208,7 @@ const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, dat
                                             <img src={focusHid.userImage} alt="userAvatar" className="userAvatar"/>
                                             <div className="header-content">
                                                 <b><Link to={`/user/${focusHid.userName}`} className="user-link">{focusHid.bio}</Link></b>
-                                                <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(focusHid.createdAt).fromNow()}</small>
+                                                <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                                             </div>
                                         </div>
                                     </div>
@@ -277,7 +250,7 @@ const StatusDialog = ({ isOpen, hidId, getFocusHid,clearFocusHid, uiLoading, dat
                                     <img src={focusHid.userImage} alt="userAvatar" className="userAvatar"/>
                                     <div className="header-content">
                                         <b><Link to={`/user/${focusHid.userName}`} className="user-link">{focusHid.bio}</Link></b>
-                                        <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(focusHid.createdAt).fromNow()}</small>
+                                        <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                                     </div>
                                 </div>
                             </div>

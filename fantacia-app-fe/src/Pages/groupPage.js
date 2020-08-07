@@ -14,10 +14,8 @@ import ErrorPaper from '../SubComponent/ErrorPaper/ErrorPaper';
 const GroupPage = ({getOneGroup, clearGroup,clearHids, data : { hids, group }, dataLoading, match, ui }) => {
     const { errors } = ui;
     const [ error, setError ] = useState(null);
-    const [ hidIdParam, setHidIdParam ] = useState(null)
     useEffect(() => {
         getOneGroup(match.params.group);
-        if(match.params.hidId) setHidIdParam(match.params.hidId)
         return () => {
             clearGroup();
             clearHids();
@@ -50,7 +48,7 @@ const GroupPage = ({getOneGroup, clearGroup,clearHids, data : { hids, group }, d
                                 ?   (<>
                                         <PostTextHid/>
                                         <PostPhotoHid/>
-                                        {hids.map(hid => <Hid key={hid.hidId} hid={hid} isOpen={hid.hidId === hidIdParam}/>)}
+                                        {hids.map(hid => <Hid key={hid.hidId} hid={hid}/>)}
                                     </>)                
                                 : (<>
                                         <PostTextHid/>

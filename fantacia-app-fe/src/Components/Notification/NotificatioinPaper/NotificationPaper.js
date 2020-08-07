@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 //mui
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Paper from '@material-ui/core/Paper';
-
+import MyTime from '../../../Util/MyTime';
 import './NotificationPaper.scss'
 const NotificationPaper = ({notification}) => {
     const { createdAt, sender, senderBio, senderImage, type } = notification;
+
     var paper;
     if(type === 'hidLike') {
         paper = (
@@ -15,7 +16,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has liked your hid</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )
@@ -25,7 +26,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has commented on your hid</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )
@@ -35,7 +36,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has liked your status</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )
@@ -45,7 +46,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has commented on your status</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )
@@ -55,7 +56,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has liked you</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )
@@ -65,7 +66,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has liked your avatar</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )
@@ -75,7 +76,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has commented on your avatar</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )
@@ -86,7 +87,7 @@ const NotificationPaper = ({notification}) => {
                 <img src={senderImage} className="sender-avatar" alt='avatar'/>
                 <div className="sender-info">
                     <p><Link to={`/user/${sender}`} className='sender-link'>{senderBio}</Link> has sended you a friend request</p>
-                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {createdAt}</small>
+                    <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                 </div>
             </Paper>
         )

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { emojify } from 'react-emojione';
@@ -11,39 +11,22 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import LikeCommentSection from '../LikeAndComment/LikeCommentSection/LikeCommentSection'
 import EditAndDeletePopover from '../EditAndDelete/EditAndDeletePopover/EditAndDeletePopover';
 import Paper from '@material-ui/core/Paper';
-// dayjs
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/vi';
 // hids dialog
 import HidDialog from '../HidDialog/HidDialog';
 import StatusDialog from '../StatusDialog/StatusDialog';
 import LikeListDialog from '../LikeListDialog/LikeListDialog/LikeListDialog';
+import MyTime from '../../Util/MyTime';
 import './Hid.scss'
-const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, group, body, createdAt, likeCount, commentCount, comments}}) => {
-    const locale = {
-        name: 'vi',
-        relativeTime: {
-            future: '%s from now',
-            past: '%s ago',
-            s: 'few seconds',
-            m: 'a minute',
-            mm: '%d minutes',
-            h: 'a hour',
-            hh: '%d hours',
-            d: 'a day',
-            dd: '%d days',
-            M: 'a month',
-            MM: '%d months',
-            y: 'a year',
-            yy: '%d years'
-        }
-    }
-    dayjs.locale(locale, null, true)
-    dayjs.extend(relativeTime);
+const Hid = ({user, hid: {type, userName, bio, userImage, image, hidId, group, body, createdAt, likeCount, commentCount, comments}}) => {
+    const [isOpen, setIsOpen] = useState(false);
     let location = useLocation();
     let { pathname } = location;
     let isPathIncludeGroup = pathname.split('/').includes('group');
+    useEffect(() => {
+        setIsOpen(pathname.split('/').includes(String(hidId)));
+        // eslint-disable-next-line
+    }, [location])
+
     var resultHid;
     if(type === "textHid"){
         resultHid = (
@@ -53,7 +36,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
                             <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link> { !isPathIncludeGroup && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${group.groupId}`} className="group-link">{group.name}</Link></>)}</b></p>
-                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
+                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                         </div>
                     </div>
                     { user.userName === userName && (<EditAndDeletePopover hidId={hidId} />)}
@@ -82,7 +65,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
                             <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link> { !isPathIncludeGroup && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${group.groupId}`} className="group-link">{group.name}</Link></>)}</b></p>
-                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
+                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                         </div>
                     </div>
                     { user.userName === userName && (<EditAndDeletePopover hidId={hidId}/>)}
@@ -112,7 +95,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
                             <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link></b> has posted a status</p>
-                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
+                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                         </div>
                     </div>
                     { user.userName === userName && (<EditAndDeletePopover hidId={hidId} />)}
@@ -141,7 +124,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
                             <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link></b> has posted a photo</p>
-                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
+                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                         </div>
                     </div>
                     { user.userName === userName && (<EditAndDeletePopover hidId={hidId}/>)}
@@ -171,7 +154,7 @@ const Hid = ({user, isOpen, hid: {type, userName, bio, userImage, image, hidId, 
                         <img src={userImage} alt="userAvatar" className="userAvatar"/>
                         <div className="header-content">
                             <p className="hid-title"><b><Link to={`/user/${userName}`} className="user-link">{bio}</Link></b> has changed avatar</p>
-                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(createdAt).fromNow()}</small>
+                            <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
 
                         </div>
                     </div>

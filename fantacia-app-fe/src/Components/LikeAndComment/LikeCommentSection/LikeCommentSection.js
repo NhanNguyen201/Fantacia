@@ -6,6 +6,7 @@ import LikeBtn from '../LikeButton/LikeBtn';
 import MySquareBtn from '../../../Util/MySquareBtn';
 import { getOneHid } from '../../../Redux/actions/dataActions';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import Comment from '../Comment/Comment';
 import CommentInput from '../CommentInput/CommentInput';
 import './LikeCommentSection.scss'
@@ -28,7 +29,10 @@ const LikeCommentSection = ({ hidId, comments, getOneHid, ui, openComment }) => 
         <div className="like-comment-section">
             <div className="like-comment-btn-section">
                 <LikeBtn hidId={hidId}/>
-                <MySquareBtn tip="Comment this hid" onClick={handleExpand}>Comment</MySquareBtn>
+                <MySquareBtn tip="Comment this hid" onClick={handleExpand}>
+                    <QuestionAnswerOutlinedIcon color="primary"/>
+                    Comment
+                </MySquareBtn>
             </div>
             {expand && (
                 <div className="comments-section">

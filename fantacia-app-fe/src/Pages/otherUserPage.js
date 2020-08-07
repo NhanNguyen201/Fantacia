@@ -14,7 +14,6 @@ import OtherUserBanner from '../Components/OtherUserBanner/OtherUserBanner';
 // import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 const OtherUserPage = ({getOneUser, clearFocusPersonInfo, clearHids, user, data: {hids, focusPerson}, dataLoading, match, ui }) => {
-    const [hidIdParam, setHidIdParam] = useState(null)
     var history = useHistory();
     let location = useLocation()
     const { errors } = ui;
@@ -22,10 +21,6 @@ const OtherUserPage = ({getOneUser, clearFocusPersonInfo, clearHids, user, data:
 
     useEffect(() => {
         getOneUser(match.params.userName);
-        
-        if(match.params.hidId) setHidIdParam(match.params.hidId)
-
-        // calcCompatible(match.params.userName);
         return () => {
             clearFocusPersonInfo();
             clearHids();
@@ -57,7 +52,7 @@ const OtherUserPage = ({getOneUser, clearFocusPersonInfo, clearHids, user, data:
                     <OtherUserBanner />
                 </Grid>
                 <Grid item md={8} sm={12} xs={12}>
-                    {hids.map(hid => <Hid key={hid.hidId} hid={hid} isOpen={hid.hidId === hidIdParam}/>)}
+                    {hids.map(hid => <Hid key={hid.hidId} hid={hid} />)}
                 </Grid>
             </Grid>) 
         )

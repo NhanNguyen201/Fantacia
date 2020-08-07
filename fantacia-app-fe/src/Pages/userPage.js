@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Hid from '../Components/Hid/Hid';
 import { connect } from 'react-redux';
@@ -6,10 +6,8 @@ import { getMyHids, clearHids } from '../Redux/actions/dataActions';
 import Grid from '@material-ui/core/Grid';
 import UserBanner from '../Components/UserBanner/UserBanner';
 const UserPage = ({getMyHids, clearHids, data, dataLoading, match}) => {
-    const [hidIdParam, setHidIdParam] = useState(null)
     useEffect(() => {
         getMyHids()
-        if(match.params.hidId) setHidIdParam(match.params.hidId)
         return () => clearHids()
         // eslint-disable-next-line
     }, [])
@@ -22,7 +20,7 @@ const UserPage = ({getMyHids, clearHids, data, dataLoading, match}) => {
                     <UserBanner/>
                 </Grid>
                 <Grid item md={8} sm={12} xs={12}>
-                    {hids.map(hid => <Hid key={hid.hidId} hid={hid} isOpen={hid.hidId === hidIdParam}/>)}
+                    {hids.map(hid => <Hid key={hid.hidId} hid={hid}/>)}
                 </Grid>
             </Grid>
         )

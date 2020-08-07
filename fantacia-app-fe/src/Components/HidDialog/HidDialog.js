@@ -20,47 +20,23 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 import Paper from '@material-ui/core/Paper';
-// dayjs
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import 'dayjs/locale/vi';
 
 // component
-import LikeCommentSection from '../LikeAndComment/LikeCommentSection/LikeCommentSection'
+import LikeCommentSection from '../LikeAndComment/LikeCommentSection/LikeCommentSection';
+import MyTime from '../../Util/MyTime'
 import './HidDialog.scss';
 
-const HidDialog = ({ isOpen, hidId, groupId, getFocusHid,clearFocusHid, uiLoading, data: {focusHid} }) => {
-    const locale = {
-        name: 'vi',
-        relativeTime: {
-            future: '%s from now',
-            past: '%s ago',
-            s: 'few seconds',
-            m: 'a minute',
-            mm: '%d minutes',
-            h: 'a hour',
-            hh: '%d hours',
-            d: 'a day',
-            dd: '%d days',
-            M: 'a month',
-            MM: '%d months',
-            y: 'a year',
-            yy: '%d years'
-        }
-    }
-    dayjs.locale(locale, null, true)
-    dayjs.extend(relativeTime);
-
+const HidDialog = ({ isOpen, hidId, groupId, getFocusHid,clearFocusHid, uiLoading, data: {focusHid, focusHid: {createdAt}} }) => {
     let location = useLocation();
     const [open, setOpen] = useState(false);
     const [oldPath, setOldPath] = useState('')
     const [newPath, setNewPath] = useState('');
     const [loading, setLoading] = useState(true);
-    
+
     useEffect(() => {
         if(isOpen) handleOpen()    
         //eslint-disable-next-line
-    }, [])
+    }, [location])
 
     useEffect(() => {
         if(uiLoading && !focusHid) setLoading(true)
@@ -112,7 +88,7 @@ const HidDialog = ({ isOpen, hidId, groupId, getFocusHid,clearFocusHid, uiLoadin
                                     <img src={focusHid.userImage} alt="userAvatar" className="userAvatar"/>
                                     <div className="header-content">
                                         <b><Link to={`/user/${focusHid.userName}`} className="user-link">{focusHid.bio}</Link> {!isPathIncludeGroup && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${focusHid.group.groupId}`} className="group-link">{focusHid.group.name}</Link></>)}</b>
-                                        <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(focusHid.createdAt).fromNow()}</small>
+                                        <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                                     </div>
                                 </div>
                             </div>
@@ -151,7 +127,7 @@ const HidDialog = ({ isOpen, hidId, groupId, getFocusHid,clearFocusHid, uiLoadin
                                             <img src={focusHid.userImage} alt="userAvatar" className="userAvatar"/>
                                             <div className="header-content">
                                                 <b><Link to={`/user/${focusHid.userName}`} className="user-link">{focusHid.bio}</Link> {!isPathIncludeGroup && (<><ArrowRightIcon style={{transform: "translateY(25%)"}}/>  <Link to={`/group/${focusHid.group.groupId}`} className="group-link">{focusHid.group.name}</Link></>)}</b>
-                                                <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  {dayjs(focusHid.createdAt).fromNow()}</small>
+                                                <small><AccessTimeIcon color='primary' className='clock-icon' fontSize='small'/>  <MyTime createdAt={createdAt}/></small>
                                             </div>
                                         </div>
                                     </div>
